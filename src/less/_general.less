@@ -1,0 +1,138 @@
+@import './_normalize.less';
+@import './_typograpphy.less';
+@import './_variables.less';
+@import './_mixins.less';
+
+* {
+  box-sizing: border-box;
+}
+
+.body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background: @global-background;
+  color: @global-text-color;
+}
+
+img {
+  max-width: 100%;
+}
+
+@-webkit-keyframes autofill {
+  to {
+    color: white;
+    background: transparent;
+  }
+}
+
+input {
+  width: 100%;
+}
+
+input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.app {
+  flex-grow: 1;
+  &-inner {
+    height: 100%;
+  }
+}
+
+.page {
+  flex-grow: 1;
+  height: 100%;
+  &-wrapper {
+    max-width: 1280 / @rem;
+    width: 86.6%;
+    height: 100%;
+    margin: 0 auto;
+    // position: relative;
+    .mobile({
+      width: 94%;
+    })
+  }
+  &-title {
+    font-family: @heading1-font-family;
+    font-size: @heading1-font-size-l;
+    color: @heading1-text-color;
+    margin: 0;
+    &__button {
+      font-size: @add-btn-font-size-l;
+      padding: 0;
+      margin-left: 17 / @rem;
+      & span {
+        .transition(color);
+      }
+      :hover {
+        color: @link-color-hover;
+      }
+      :active {
+        color: @link-color-active;
+      }
+    }
+    &-holder {
+      margin: 0 auto;
+  text-align: center;
+      .mobile({
+        position: absolute;
+        top: 3.5rem;
+        text-align: left;
+      })
+    }
+    &__text {
+      vertical-align: middle;
+    }
+  }
+  &-text {
+    font-family: @heading4-font-family;
+    font-size: @heading4-font-size-l;
+    letter-spacing: @letter-spacing-m;
+    font-weight: normal;
+    margin: 0;
+    &-holder {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      margin: 0 auto;
+      text-align: center;
+      .mobile({
+        position: static;
+        transform: none;
+        order: 1;
+      })
+    }
+    .mobile({
+      font-size: @heading4-font-size-m-ls;
+    })
+  }
+}
+
+.header-bottom {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 11vh;
+  position: relative;
+  .mobile({
+    flex-direction: column;
+    margin-bottom: 6.4vh;
+  })
+}
+
+.pomodora-image {
+  width: 164 / @rem;
+  margin: 0 auto;
+  margin-top: 16vh;
+  margin-bottom: 10vh;
+}

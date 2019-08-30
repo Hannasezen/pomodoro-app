@@ -1,0 +1,244 @@
+@global-font-size: 16;
+@rem: @global-font-size * 1rem;
+
+/* breakpoints */
+@breakpoint-small:          768px;    // Phone Portrait
+@breakpoint-medium:         1024px;   // Phone landscape
+@breakpoint-large:          1280px;   // Tablet
+//@breakpoint-xlarge:         1280px;   // Tablet
+
+@breakpoint-xsmall-max:     (@breakpoint-small - 1);
+@breakpoint-small-max:      (@breakpoint-medium - 1);
+@breakpoint-medium-max:     (@breakpoint-large - 1);
+//@breakpoint-large-max:     (@breakpoint-xlarge - 1);
+
+/* typography */
+@mesasge-font-size-l:      36 / @rem;
+@mesasge-font-size-m:      36 / @rem;
+@mesasge-font-size-s-p:    36 / @rem;
+@mesasge-font-size-s-l:    36 / @rem;
+
+@heading1-font-size-l:     28 / @rem;
+@heading1-font-size-m:     32 / @rem;
+@heading1-font-size-s-p:   32 / @rem;
+@heading1-font-size-s-l:   32 / @rem;
+
+@heading2-font-size-l:     16 / @rem;
+@heading2-font-size-m:     16 / @rem;
+@heading2-font-size-s-p:   16 / @rem;
+@heading2-font-size-s-l:   16 / @rem;
+
+@heading3-font-size-l:     19 / @rem;
+@heading3-font-size-m:     22 / @rem;
+@heading3-font-size-s-p:   24 / @rem;
+@heading3-font-size-s-l:   19 / @rem;
+
+@heading4-font-size-l:     22 / @rem;
+@heading4-font-size-m:     24 / @rem;
+@heading4-font-size-m-ls:  27 / @rem;
+@heading4-font-size-s-p:   27 / @rem;
+@heading4-font-size-s-l:   27 / @rem;
+
+@subtitle-font-size-l:     17 / @rem;
+@subtitle-font-size-m:     21 / @rem;
+@subtitle-font-size-s-p:   19 / @rem;
+@subtitle-font-size-s-l:   19 / @rem;
+
+@paragraph-font-size-l:    16 / @rem;
+@paragraph-font-size-m:    19 / @rem;
+@paragraph-font-size-s-p:  17 / @rem;
+@paragraph-font-size-s-l:  15 / @rem;
+
+@tabmenu-font-size-l:      16 / @rem;
+@tabmenu-font-size-m:      20 / @rem;
+@tabmenu-font-size-s-p:    24 / @rem;
+@tabmenu-font-size-s-l:    24 / @rem;
+
+@caption-font-size-l:      14 / @rem;
+@caption-font-size-m:      14 / @rem;
+@caption-font-size-s-p:    14 / @rem;
+@caption-font-size-s-l:    14 / @rem;
+
+@btn-font-size-l:          18 / @rem;
+@btn-font-size-m:          18 / @rem;
+@btn-font-size-s-p:        22.5 / @rem;
+@btn-font-size-s-l:        22.5 / @rem;
+
+@date-font-size-l:         18 / @rem;
+@date-font-size-m:         18 / @rem;
+@date-font-size-s-p:       22.5 / @rem;
+@date-font-size-s-l:       22.5 / @rem;
+
+@task-list-title-size-l:     19 / @rem;
+@task-list-title-size-m:     22 / @rem;
+@task-list-title-size-s-p:   24 / @rem;
+@task-list-title-size-s-l:   19 / @rem;
+
+@modal-subtitle-size-l:      14 / @rem;
+@modal-subtitle-size-m:      14 / @rem;
+@modal-subtitle-size-s-p:    16 / @rem;
+@modal-subtitle-size-s-l:    16 / @rem;
+
+@notification-size-l:        15 / @rem;
+@notification-size-m:        18 / @rem;
+@notification-size-s-p:      22 / @rem;
+@notification-size-s-l:      22 / @rem;
+
+@title-font-size:            12 / @rem;
+
+@message-font-family:        'Roboto-Light', Arial, sans-serif;
+@heading1-font-family:       'Roboto-Bold', Arial, sans-serif;
+@heading2-font-family:       'Roboto-Bold', Arial, sans-serif;
+@heading3-font-family:       'Roboto-Medium', Arial, sans-serif;
+@heading4-font-family:       'Roboto-Light', Arial, sans-serif;
+@subtitle-font-family:       'Roboto-Regular', Arial, sans-serif;
+@paragraph-font-family:      'Roboto-Regular', Arial, sans-serif;
+@tabmenu-font-family:        'PT-Sans', Arial, sans-serif;
+@caption-font-family:        'PT-Sans', Arial, sans-serif;
+@notification-font-family:   'Roboto-Bold', Arial, sans-serif;
+@title-font-family:          'Roboto-Bold', Arial, sans-serif;
+
+@letter-spacing-l: 0.7px;
+@letter-spacing-m: 0.6px;
+
+/* colors */
+@white:                #FFFFFF;
+@silver:               #C8C8C8;
+@light-grey:           #cacaca;
+@grey:                 #7f7f7f;
+@dark-grey:            #9F9F9F;
+@nepal:                #8DA5B8;
+@madison:              #2A3F50;
+@dark-madison:         #3c5162;
+@light-spray:          #dbeaf5;
+@spray:                #82C7E0;
+@malibu:               #59ABE3;
+@curious-blue:         #368BC5;
+@pelorous:             #2380B5;
+@gorse:                #FDDC43;
+@moon-yellow:          #E8BD0A;
+@selective-yellow:     #FFB200;
+@yellow-orange:        #FFA841;
+@tangerine:            #DD8F05;
+@carrot-orange:        #F08E19;
+@terra-cotta:          #E16C65;
+@chestnut:             #B74E4B;
+@tomato:               #F75C4C;
+@dark-coral:           #C94D47;
+@mahogany:             #BC3535;
+@dark-turquoise:       #00D4D9;
+@persian-green:        #04A5A5;
+@mountain-meadow:      #1ABC9C;
+@mountain-meadow-dark: #16A085;
+@deep-sea:             #0E8C74;
+@amethyst:             #B470D0;
+@deep-lilac:           #9849B8;
+
+/* background */
+
+@global-background:    @madison;
+
+/* priority */
+@urgent:               @tomato;                  //red
+@urgent-active:        @dark-coral;              //red
+@high:                 @yellow-orange;           //orange
+@high-active:          @carrot-orange;           //orange
+@middle:               @gorse;                   //yellow
+@middle-active:        @moon-yellow;             //yellow
+@low:                  @mountain-meadow;         //green
+@low-active:           @mountain-meadow-dark;    //green
+
+/* categoties */
+@work:                 @selective-yellow;  //yellow
+@work-active:          @tangerine;         //yellow
+@education:            @malibu;            //blue
+@education-active:     @curious-blue;      //blue
+@hobby:                @amethyst;          //purple
+@hobby-active:         @deep-lilac;        //purple
+@sport:                @terra-cotta;       //red
+@sport-active:         @chestnut;          //red
+@other:                @dark-turquoise;    //green
+@other-active:         @persian-green;     //green
+
+/* text */
+@global-text-color:    @nepal;
+@heading1-text-color:  @white;
+
+/* tabmenu */
+@tabmenu-color:        @nepal;
+@tabmenu-color-active: @white;
+@tabmenu-color-hover:  @spray;
+
+/* settings colors */
+@settings-work-time:       @selective-yellow;
+@settings-work-iteration:  @dark-turquoise;
+@settings-short-break:     @malibu;
+@settings-long-break:      @amethyst;
+
+/* links */
+@link-color-default:         @nepal;  
+@link-color-hover:           @spray;
+@link-color-active:          @white;
+
+/* titles */
+@title-color:                @dark-madison;
+@title-bg-color:             @light-spray;
+
+/* buttons */
+@btn-text-color:              @white;
+
+@btn--bg-green-default:       @mountain-meadow;
+@btn--bg-green-hover:         @mountain-meadow-dark;
+@btn--bg-green-focus:         @mountain-meadow-dark;
+@btn--bg-green-pressed:       @deep-sea;
+
+@btn--bg-red-default:         @tomato;
+@btn--bg-red-hover:           @dark-coral;
+@btn--bg-red-focus:           @dark-coral;
+@btn--bg-red-pressed:         @mahogany;
+
+@btn--bg-blue-default:        @malibu;
+@btn--bg-blue-hover:          @curious-blue;
+@btn--bg-blue-focus:          @curious-blue;
+@btn--bg-blue-pressed:        @pelorous;
+
+@btn-min-width:               7.68rem;
+@btn-padding-top:             0.875rem;
+@btn-padding-bottom:          0.875rem;
+@btn-padding-left:            1.625rem;
+@btn-padding-right:           1.625rem;
+
+@btn-timer-width:             10.5rem;
+
+@btn-font-family:             @caption-font-family;
+
+@add-btn-font-size-l:         0.94rem;
+@add-btn-font-size-m:         1.06rem;
+@add-btn-font-size-s:         1.06rem;
+
+/* task-list */
+@task-list-title-font:  'Roboto-Bold', Arial, sans-serif; 
+
+
+/* task card */
+@task-bg-color:               @white;
+@task-day-font-size:          27 / @rem;
+@task-list-category-font:     @heading2-font-family;
+@task-list-category-size:     @heading2-font-size-l;
+@task-btn-color:              @light-grey;
+
+/* modals */
+@modal-subtitle-color:        @white;
+@input-radio-color:           @nepal;
+
+/* notifications */
+@error:                 @tomato;
+@warning:               @yellow-orange;
+@success:               @mountain-meadow;
+@info:                  @malibu;
+
+/* borders */
+
+/* spacings */
+@title-margin-m:       1.56rem;
+@title-margin-l:       2.19rem;

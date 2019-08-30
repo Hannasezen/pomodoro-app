@@ -1,0 +1,58 @@
+.visually-hidden() {
+	position: absolute;
+	clip: rect(0 0 0 0);
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	border: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.opacity (@opacity: 0.5) {
+  -webkit-opacity: @opacity;
+  -moz-opacity: @opacity;
+  opacity: @opacity;
+}
+
+.transition(@prop) {
+  transition: @prop ease 0.3s;
+}
+
+.category-bg-color(@category) {
+  background-color: @@category;
+}
+
+.priority-color(@priority) {
+  color: @@priority;
+};
+
+.priority-bg-color(@priority) {
+  background-color: @@priority;
+};
+
+.category-color(@category) {
+  color: @@category;
+};
+
+.category-shadow-color(@category) {
+  box-shadow: 0px 0px 0 3px @@category;
+};
+
+.mobile(@rules) {
+  @media (max-width: 1024px) {
+    @rules();
+  }
+}
+
+.mobile-portrait(@rules) {
+  @media (max-width: 1024px) and (orientation: portrait) {
+    @rules();
+  }
+}
+
+.mobile-landscape(@rules) {
+  @media (max-width: 1024px) and (orientation: landscape) {
+    @rules();
+  }
+}
