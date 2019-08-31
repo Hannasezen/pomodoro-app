@@ -1,0 +1,67 @@
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+	min-width: 123 / @rem;
+	padding: @btn-padding-top @btn-padding-left;
+	margin: 0 10 / @rem;
+	border: none;
+	color: @btn-text-color;
+	font-family: @btn-font-family;
+	font-size: @btn-font-size-l;
+	line-height: 1;
+	font-weight: bold;
+	text-align: center;
+	.transition(background-color);
+	&-holder {
+		text-align: center;
+	}
+	&--bg-blue {
+		background-color: @btn--bg-blue-default;
+		&:hover {
+			background-color: @btn--bg-blue-hover;
+		}
+		&:active {
+			background-color: @btn--bg-blue-pressed;
+		}
+		&:focus {
+			background-color: @btn--bg-blue-focus;
+		}
+	}
+	&--bg-red {
+		background-color: @btn--bg-red-default;
+		&:hover {
+			background-color: @btn--bg-red-hover;
+		}
+		&:active {
+			background-color: @btn--bg-red-pressed;
+		}
+		&:focus {
+			background-color: @btn--bg-red-focus;
+		}
+	}
+	&--bg-green {
+		background-color: @btn--bg-green-default;
+		&:hover {
+			background-color: @btn--bg-green-hover;
+		}
+		&:active {
+			background-color: @btn--bg-green-pressed;
+		}
+		&:focus {
+			background-color: @btn--bg-green-focus;
+		}
+	}
+	.mobile({
+		width: 261px;
+		height: 73px;
+	})
+}
+
+.add-task-button {
+	border: none;
+	background-color: transparent;
+	line-height: 1;
+	font-size: 15 / @rem;
+}

@@ -1,0 +1,52 @@
+@notification-colors: error, success, warning, info;
+
+.notification {
+  position: absolute;
+  bottom: 31 / @rem;
+  right: 0;
+  width: 448 / @rem;
+  height: 50 / @rem;
+  background: red;
+  display: flex;
+  border: 1px solid white;
+  border-radius: 2px;
+  color: white;
+  each(@notification-colors, {
+    &--@{value} {
+      .priority-bg-color(@value);
+    }
+  });
+  &--success {
+    bottom: 91 / @rem;
+  }
+  &--warning {
+    bottom: 150 / @rem;
+  }
+  &--info {
+    bottom: 211 / @rem;
+  }
+  &__image {
+    padding: 0 1rem;
+    font-size: 33 / @rem;
+    line-height: 50 / @rem;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  &__text {
+    flex-grow: 1;
+    line-height: 50 / @rem;
+    padding: 0 13 / @rem;
+    font-family: @notification-font-family;
+    font-size: @notification-size-l;
+  }
+  &__button{
+    padding: 0 1rem;
+    &--close {
+      background: transparent;
+      border: none;
+      font-size: 24 / @rem;
+      display: block;
+      height: 100%;
+      padding: 0;
+    }
+  }
+}
