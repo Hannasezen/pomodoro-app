@@ -1,10 +1,10 @@
 import Vue from "vue";
 import Router from "vue-router";
-import TaskList from "./views/TaskList.vue";
+import Home from "./views/Home.vue";
 import Settings from "./views/Settings.vue";
+import TaskList from "./views/TaskList.vue";
 import Timer from "./views/Timer.vue";
 import Reports from "./views/Reports.vue";
-import FirstTime from "./views/FirstTime.vue";
 
 Vue.use(Router);
 
@@ -14,8 +14,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "task-list",
-      component: TaskList
+      name: "home",
+      component: Home
     },
     {
       path: "/settings",
@@ -31,6 +31,11 @@ export default new Router({
       path: "/reports",
       name: "reports",
       component: Reports
-    }
+    },
+    {
+      path: "/task-list",
+      name: "task-list",
+      component: TaskList
+    },
   ]
 });

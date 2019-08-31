@@ -1,17 +1,29 @@
 <template>
-  <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <div class="">
+    <FirstTime v-if="!isLoggedIn"/>
+    <TaskList v-else />
+  </div> 
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import FirstTime from './FirstTime';
+import TaskList from './TaskList';
 
 export default {
-  name: "home",
+  name: 'home',
   components: {
-    HelloWorld
+    FirstTime,
+    TaskList,
+  },
+  data() {
+    return {
+      title: 'Task List',
+      isLoggedIn: false,
+    };
+  },
+  created() {
+    this.isLoggedIn = window.localStorage.getItem('isLoggedIn');
+    window.localStorage.setItem('isLoggedIn', true);
   }
 };
 </script>
