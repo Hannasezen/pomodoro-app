@@ -14,19 +14,20 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async getTasks({ commit }) {
+    getTasks({ commit }) {
       let tasks = [];
-      await firebase
-                  .firestore()
-                  .collection('task-list')
-                  .get()
-                  .then((querySnapshot) => {
-                    querySnapshot.docs.forEach((doc, index) => {
-                      let obj = doc.data();
-                      tasks.push(obj);
-                    });
-                    commit('updateTasks', tasks);
-                  });
+      firebase
+              .firestore()
+              .collection('task-list')
+              .get()
+              .then((querySnapshot) => {
+                querySnapshot.docs.forEach((doc, index) => {
+                  let obj = doc.data();
+                  tasks.push(obj);
+                });
+                commit('updateTasks', tasks);
+              })
+              .catch(e => console.log(e.message));
     }
   },
   getters: {
