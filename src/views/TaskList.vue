@@ -7,7 +7,12 @@
         <div class="page-title-holder task-list-title-holder">
           <h1 class="page-title">
             <span class="page-title__text">Daily Task List</span>
-            <button class="page-title__button add-task-button" data-title="Add New Task"><span class="icon-add"></span></button>
+            <button class="page-title__button add-task-button"
+                    data-title="Add New Task"
+                    @click="showModal"
+            >
+            <span class="icon-add"></span>
+            </button>
           </h1>
         </div>
         <nav class="page-tab-menu-holder task-list__tab-menu">
@@ -135,19 +140,37 @@
       </section>
       <!--GLOBAL tasks list page END-->
     </div>
+    <Modal v-if="modalShow"/>
   </section>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import TaskItem from '../components/TaskItem';
+import Modal from '../components/Modal';
 
 export default {
-	name: "task-list",
-	components: {
-		TaskItem,
+  name: "task-list",
+  data() {
+    return {
+
+    }
   },
-  computed: mapGetters(['getTasks'])
+	components: {
+    TaskItem,
+    Modal,
+  },
+  computed: {
+    ...mapGetters([
+      'getTasks',
+      'modalShow'
+      ]),    
+  },
+  methods: {
+    ...mapActions([
+      'showModal'
+    ]),
+  }
 }
 </script>
 

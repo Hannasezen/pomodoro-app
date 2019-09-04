@@ -4,13 +4,24 @@ import * as firebase from 'firebase';
 
 Vue.use(Vuex);
 
+function generateId() {
+  return parseInt(Math.random() * 100000);
+}
+
 export default new Vuex.Store({
   state: {
-    tasks: []
+    tasks: [],
+    modalShow: false,
   },
   mutations: {
     updateTasks(state, tasks) {
       state.tasks = tasks;
+    },
+    addTask(state, task) {
+      state.tasks.push(task);
+    },
+    showModal(state) {
+      state.modalShow = !state.modalShow;
     }
   },
   actions: {
@@ -28,11 +39,21 @@ export default new Vuex.Store({
                 commit('updateTasks', tasks);
               })
               .catch(e => console.log(e.message));
+    },
+    addTask({ commit }, task = {}) {
+      task.taskId = generateId();
+      commit('addTask', task);
+    },
+    showModal({commit}) {
+      commit('showModal');
     }
   },
   getters: {
     getTasks(state) {
-      return state.tasks
+      return state.tasks;
+    },
+    modalShow(state) {
+      return state.modalShow;
     }
   }
 });
