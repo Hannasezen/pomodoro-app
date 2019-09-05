@@ -40,41 +40,27 @@
 export default {
 	name: "task-item",
 	props: {
-    title: String,
-    description: String,
-    categoryId: String,
-		estimation: Number,
-		priority: String,
-		deadlineDate: String
+    title:        { type: String,	default: ''	},
+    description:  { type: String,	default: '' },
+    categoryId:   {	type: String,	default: 'work' },
+		estimation:   {	type: Number,	default: 0 },
+		priority:     {	type: String,	default: 'low' },
+		deadlineDate: {	type: String,	default: new Date().toLocaleDateString() }
 	},
 	data() {
 		return {
-			months: [
-				"January",
-				"February",
-				"March",
-				"April",
-				"May",
-				"June",
-				"July",
-				"August",
-				"September",
-				"October",
-				"November",
-				"December"
-			],
-			todayDate: new Date().getTime()
+			todayDate: new Date().toLocaleDateString()
 		}
 	},
 	computed: {
 		isToday() {
-			return new Date(+this.deadlineDate).toLocaleDateString() === new Date(+this.todayDate).toLocaleDateString();
+			return this.deadlineDate === this.todayDate;
 		},
 		taskDate() {
-			return new Date(+this.deadlineDate).getDate();
+			return new Date(this.deadlineDate).getDate();
 		},
 		taskMonth() {
-			return this.months[new Date(+this.deadlineDate).getMonth()];
+			return new Date(this.deadlineDate).toLocaleDateString('en-US', {month: 'long'});
 		},
 		titlePriorityClass() {
 			return `task-item__title--priority-${this.priority}`;

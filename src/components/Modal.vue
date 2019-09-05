@@ -25,7 +25,7 @@
         </button>
       </div>
       <!--modal title-->
-      <h1 class="modal__title">
+      <h1 class="modal__title">{{ modalTitle }}
       </h1>
       <!--modal form start-->
     </div>
@@ -90,6 +90,7 @@
           class="fieldset__input"
           id="task-date"
           name="deadline"
+          v-model="deadline"
           >
         </label>
       </fieldset>
@@ -98,30 +99,22 @@
       <fieldset class="task-form__box fieldset fieldset__estimations-block">
         <legend class="fieldset__title">ESTIMATION</legend>
 
-        <label class="fieldset__tomato" aria-label="one pomodoro">
-          <input class="fieldset__tomato-input" type="radio" name="estimation" value="1" checked>
-          <span class="fieldset__tomato-image fieldset__tomato-image--first"></span>
+        <label
+          class="fieldset__tomato"
+          aria-label="one pomodoro"
+          v-for="index in 5"
+          :key="index"
+        >
+          <input
+            class="fieldset__tomato-input"
+            type="radio"
+            name="estimation"
+            :value="[index]"
+            v-model="checkedEstimation"
+          >
+          <span class="fieldset__tomato-image fieldset__tomato-image"></span>
         </label>
 
-        <label class="fieldset__tomato" aria-label="two pomodoro">
-          <input class="fieldset__tomato-input" type="radio" name="estimation" value="2">
-          <span class="fieldset__tomato-image fieldset__tomato-image--second"></span>
-        </label>
-
-        <label class="fieldset__tomato" aria-label="three pomodoro">
-          <input class="fieldset__tomato-input" type="radio" name="estimation" value="3">
-          <span class="fieldset__tomato-image fieldset__tomato-image--third"></span>
-        </label>
-
-        <label class="fieldset__tomato" aria-label="four pomodoro">
-          <input class="fieldset__tomato-input" type="radio" name="estimation" value="4">
-          <span class="fieldset__tomato-image fieldset__tomato-image--fourth"></span>
-        </label>
-
-        <label class="fieldset__tomato" aria-label="five pomodoro">         
-          <input class="fieldset__tomato-input" type="radio" name="estimation" value="5">
-          <span class="fieldset__tomato-image fieldset__tomato-image--fifth"></span>
-        </label>
       </fieldset>
       <!--task Priority block-->
       <fieldset class="task-form__box fieldset last" id="task-priority">
@@ -157,10 +150,13 @@ export default {
   name: "modal",
   data() {
     return {
+      modalTitle: 'Add task',
       title: '',
       description: '',
+      deadline: '',
       checkedCategory: '',
       checkedPriority: '',
+      checkedEstimation: 0,
       categories: [
         'work',
         'education',
@@ -187,13 +183,28 @@ export default {
       'addTask',
     ]),
     addNewTask() {
-      this.addTask({
-        title: this.title,
-        description: this.description,
-        categoryId: this.checkedCategory[0],
-        priority: this.checkedPriority[0],
-      })
+      if (this.isValidForm()) {
+        this.addTask({
+          title: this.title,
+          description: this.description,
+          categoryId: this.checkedCategory[0],
+          priority: this.checkedPriority[0],
+          deadlineDate: this.deadline ? new Date(this.deadline).toLocaleDateString() : new Date().toLocaleDateString(),
+          estimation: +this.checkedEstimation,
+        })
+      } else {
+        console.log('not valid')
+      }
+      
     },
+    isValidForm() {
+      return (this.checkedEstimation
+          && this.checkedCategory
+          && this.checkedPriority
+          && this.title
+          && this.description
+          && this.deadline)
+    }
   },
 }
 </script>

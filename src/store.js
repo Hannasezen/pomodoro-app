@@ -5,7 +5,7 @@ import * as firebase from 'firebase';
 Vue.use(Vuex);
 
 function generateId() {
-  return parseInt(Math.random() * 100000);
+  return 'task' + parseInt(Math.random() * 100000);
 }
 
 export default new Vuex.Store({
@@ -43,6 +43,12 @@ export default new Vuex.Store({
     addTask({ commit }, task = {}) {
       task.taskId = generateId();
       commit('addTask', task);
+      firebase
+              .firestore()
+              .collection('task-list')
+              .doc(task.taskId)
+              .set(task)
+              .catch(e => console.log(e))
     },
     showModal({commit}) {
       commit('showModal');
