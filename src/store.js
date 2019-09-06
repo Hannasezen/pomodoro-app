@@ -12,6 +12,9 @@ export default new Vuex.Store({
   state: {
     tasks: [],
     modalShow: false,
+    modalTitle: 'Add task',
+    activeTask: null,
+    activeTaskIndex: 0,
   },
   mutations: {
     updateTasks(state, tasks) {
@@ -20,7 +23,22 @@ export default new Vuex.Store({
     addTask(state, task) {
       state.tasks.push(task);
     },
-    showModal(state) {
+    editTask(state, task) {
+      state.tasks.splice(state.activeTaskIndex, 1, task);
+    },
+    showModal(state, id) {
+      if(typeof id == 'string') {
+        state.modalTitle = 'Edit task';
+        state.activeTask = state.tasks.find(task => task.taskId == id);
+        state.activeTaskIndex = state.tasks.indexOf(state.activeTask);
+      } else {
+        state.modalTitle = 'Add task';
+        state.activeTask = null;
+      }
+      state.modalShow = !state.modalShow;
+    },
+    closeModal(state) {
+      state.activeTask = null;
       state.modalShow = !state.modalShow;
     }
   },
@@ -40,18 +58,31 @@ export default new Vuex.Store({
               })
               .catch(e => console.log(e.message));
     },
-    addTask({ commit }, task = {}) {
-      task.taskId = generateId();
-      commit('addTask', task);
-      firebase
-              .firestore()
-              .collection('task-list')
-              .doc(task.taskId)
-              .set(task)
-              .catch(e => console.log(e))
+    addTask({ commit }, task) {
+      if(!task.taskId) {
+        task.taskId = generateId();
+        firebase
+          .firestore()
+          .collection('task-list')
+          .doc(task.taskId)
+          .set(task)
+          .then(commit('addTask', task))
+          .catch(e => console.log(e))
+      } else {
+        firebase
+          .firestore()
+          .collection('task-list')
+          .doc(task.taskId)
+          .update(task)
+          .then(commit('editTask', task))
+          .catch(e => console.log(e))
+      }      
     },
-    showModal({commit}) {
-      commit('showModal');
+    showModal({commit}, id) {
+      commit('showModal', id);
+    },
+    closeModal({ commit }) {
+      commit('closeModal');
     }
   },
   getters: {
@@ -60,6 +91,12 @@ export default new Vuex.Store({
     },
     modalShow(state) {
       return state.modalShow;
+    },
+    getActiveTask(state) {
+      return state.activeTask;
+    },
+    modalTitle(state) {
+      return state.modalTitle;
     }
   }
 });

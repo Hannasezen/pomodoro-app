@@ -21,7 +21,12 @@
       <button type="button" class="task-item__btn task-item__btn-up" data-title="Move to Daily list">
         <span class="icon-arrows-up"></span>
       </button>
-      <button type="button" class="task-item__btn task-item__btn-edit" data-title="Edit task">
+      <button
+				type="button"
+				class="task-item__btn task-item__btn-edit"
+				data-title="Edit task"
+				@click.prevent="showModal(taskId)"
+			>
         <span class="icon-edit"></span>
       </button>
       </div>          
@@ -37,6 +42,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
 	name: "task-item",
 	props: {
@@ -45,7 +52,8 @@ export default {
     categoryId:   {	type: String,	default: 'work' },
 		estimation:   {	type: Number,	default: 0 },
 		priority:     {	type: String,	default: 'low' },
-		deadlineDate: {	type: String,	default: new Date().toLocaleDateString() }
+		deadlineDate: {	type: String,	default: new Date().toLocaleDateString() },
+		taskId:       { type: String, default: '' },
 	},
 	data() {
 		return {
@@ -71,6 +79,9 @@ export default {
 		estimationPriorityClass() {
 			return `task-item__right-info--priority-${this.priority}`;
 		}
+	},
+	methods: {
+		...mapActions(['showModal'])
 	}
 }
 </script>

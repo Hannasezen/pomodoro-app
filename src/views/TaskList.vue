@@ -134,6 +134,7 @@
             :estimation="task.estimation"
             :priority="task.priority"
             :deadlineDate="task.deadlineDate"
+            :taskId="task.taskId"
           />
         </ul>
         <!--global tasks list END-->

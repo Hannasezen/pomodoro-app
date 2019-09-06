@@ -11,7 +11,7 @@
       <div class="modal__controlls">
         <button type="button"
           class="modal-btn modal-close-btn"
-          @click="showModal"
+          @click="closeModal"
         >
           <span class="icon-close"></span>
         </button>
@@ -42,7 +42,7 @@
           type="text"
           name="title"
           placeholder="Add title here"
-          v-model="title"
+          v-model="task.title"
           />
         </label>
       </fieldset>
@@ -56,7 +56,7 @@
           type="text"
           name="description"
           placeholder="Add description here"
-          v-model="description"
+          v-model="task.description"
           />
         </label>
       </fieldset>
@@ -74,10 +74,11 @@
               name="category"
               :value="[category]"
               v-model="checkedCategory"
+              :checked="1 == 1"
               >
             <span class="fieldset__circle-image"
               :class="{['fieldset__circle-image--' + category]: true}"></span>
-            <span class="fieldset__circle-text">{{ category }}</span>                  
+            <span class="fieldset__circle-text">{{ category }}</span>             
           </label>        
       </fieldset>
 
@@ -90,7 +91,7 @@
           class="fieldset__input"
           id="task-date"
           name="deadline"
-          v-model="deadline"
+          v-model="task.deadlineDate"
           >
         </label>
       </fieldset>
@@ -150,13 +151,6 @@ export default {
   name: "modal",
   data() {
     return {
-      modalTitle: 'Add task',
-      title: '',
-      description: '',
-      deadline: '',
-      checkedCategory: '',
-      checkedPriority: '',
-      checkedEstimation: 0,
       categories: [
         'work',
         'education',
@@ -173,24 +167,49 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'modalShow'
-    ]), 
+    ...mapGetters(['getActiveTask', 'modalTitle']),
+    checkedCategory: {
+      get() {
+        return [this.task.categoryId];
+      },
+      set(newCategory) {
+        return this.task.categoryId = newCategory[0];
+      }
+    },
+    checkedPriority: {
+      get() {
+        return [this.task.priority];
+      },
+      set(newPriority) {
+        return this.task.priority = newPriority[0];
+      }
+    },
+    checkedEstimation: {
+      get() {
+        return [this.task.estimation];
+      },
+      set(newEstimation) {
+        return this.task.estimation = newEstimation[0];
+      }
+    },
   },
   methods: {
     ...mapActions([
       'showModal',
+      'closeModal',
       'addTask',
     ]),
     addNewTask() {
+      console.log(this.task)
       if (this.isValidForm()) {
         this.addTask({
-          title: this.title,
-          description: this.description,
-          categoryId: this.checkedCategory[0],
-          priority: this.checkedPriority[0],
-          deadlineDate: this.deadline ? new Date(this.deadline).toLocaleDateString() : new Date().toLocaleDateString(),
-          estimation: +this.checkedEstimation,
+          title: this.task.title,
+          description: this.task.description,
+          categoryId: this.task.categoryId,
+          priority: this.task.priority,
+          deadlineDate: new Date(this.deadlineDate).toLocaleDateString(),
+          estimation: +this.task.estimation,
+          taskId: this.task.taskId,
         })
       } else {
         console.log('not valid')
@@ -198,14 +217,24 @@ export default {
       
     },
     isValidForm() {
-      return (this.checkedEstimation
-          && this.checkedCategory
-          && this.checkedPriority
-          && this.title
-          && this.description
-          && this.deadline)
+      return (this.task.estimation
+          && this.task.categoryId
+          && this.task.priority
+          && this.task.title
+          && this.task.description
+          && this.task.deadlineDate)
     }
   },
+  created() {
+    this.task = this.getActiveTask || {
+                title: 't',
+                description: '',
+                deadline: '',
+                priority: '',
+                categoryId: '',
+                estimation: 0,
+              }
+  }
 }
 </script>
 
