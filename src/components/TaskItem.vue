@@ -1,7 +1,7 @@
 <template>
   <li class="task-item">
     <div class="task-item__left-info">
-      <div class="task-item__color-line" :class="[lineCategoryClass]">
+      <div class="task-item__color-line" :class="{['task-item__color-line--category-' + categoryId]: true}">
       <button type="button" class="icon-close task-item__left-btn task-item__left-btn--checked hidden"></button>
       <button type="button" class="icon-trash task-item__left-btn task-item__left-btn--delete hidden"></button>
       </div>
@@ -13,7 +13,7 @@
     </div>
     <div class="task-item__main-info">
       <div class="task-item__text">
-      <h4 class="task-item__title" :class="[titlePriorityClass]">{{ title }}</h4>
+      <h4 class="task-item__title" :class="{['task-item__title--priority-' + priority]: true}">{{ title }}</h4>
       <div class="task-item__description">{{ description }}</div>
       </div>
       <div class="task-item__edit-buttons">
@@ -31,7 +31,7 @@
       </button>
       </div>          
     </div>
-    <div class="task-item__right-info" :class="[estimationPriorityClass]">
+    <div class="task-item__right-info" :class="{['task-item__right-info--priority-' + priority]: true}">
       <button type="button" class="icon-tomato task-item__tomato">
       <span class="task-item__iteration">
         <span class="task-item__iteration">{{ estimation }}</span>
@@ -47,13 +47,13 @@ import { mapActions } from 'vuex';
 export default {
 	name: "task-item",
 	props: {
-    title:        { type: String,	default: ''	},
-    description:  { type: String,	default: '' },
-    categoryId:   {	type: String,	default: 'work' },
-		estimation:   {	type: Number,	default: 0 },
-		priority:     {	type: String,	default: 'low' },
-		deadlineDate: {	type: String,	default: new Date().toLocaleDateString() },
-		taskId:       { type: String, default: '' },
+    title: String,
+    description: String,
+    categoryId: String,
+		estimation: Number,
+		priority: String,
+		deadlineDate: String,
+		taskId: String,
 	},
 	data() {
 		return {
@@ -70,15 +70,6 @@ export default {
 		taskMonth() {
 			return new Date(this.deadlineDate).toLocaleDateString('en-US', {month: 'long'});
 		},
-		titlePriorityClass() {
-			return `task-item__title--priority-${this.priority}`;
-		},
-		lineCategoryClass() {
-			return `task-item__color-line--category-${this.categoryId}`;
-		},
-		estimationPriorityClass() {
-			return `task-item__right-info--priority-${this.priority}`;
-		}
 	},
 	methods: {
 		...mapActions(['showModal'])

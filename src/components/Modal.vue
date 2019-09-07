@@ -4,7 +4,6 @@
       <!--modal buttons-->
       <button type="button"
         class="modal-btn modal-delete-btn"
-        data-target=""
         >
         <span class="icon-trash"></span>
       </button>
@@ -18,7 +17,6 @@
         <button type="submit"
           form="add-task"
           class="modal-btn modal-save-btn"
-          data-target=""
           @click.prevent="showModal(); addNewTask()"
         >
           <span class="icon-check"></span>
@@ -29,10 +27,10 @@
       </h1>
       <!--modal form start-->
     </div>
-    <form action=""
-    class="modal__form task-form"
-    id="add-task"
-    name="">
+    <form
+      class="modal__form task-form"
+      name="task"
+    >
       <!--task title-->
       <fieldset class="task-form__box fieldset">
         <legend class="fieldset__title">Title</legend>
@@ -74,7 +72,6 @@
               name="category"
               :value="[category]"
               v-model="checkedCategory"
-              :checked="1 == 1"
               >
             <span class="fieldset__circle-image"
               :class="{['fieldset__circle-image--' + category]: true}"></span>
@@ -91,7 +88,7 @@
           class="fieldset__input"
           id="task-date"
           name="deadline"
-          v-model="task.deadlineDate"
+          v-model="checkedDate"
           >
         </label>
       </fieldset>
@@ -192,6 +189,18 @@ export default {
         return this.task.estimation = newEstimation[0];
       }
     },
+    checkedDate: {
+      get() {
+        return this.task.deadlineDate.replace(/(^\d{1,2})\/(\d{2})\/(\d{4})/, function(match, p1, p2, p3) {
+          return `${p3}-${p1.length < 2 ? '0' + p1 : p1}-${p2}`;
+        });        
+      },
+      set(newDate) {
+        return this.task.deadlineDate = newDate.replace(/(^\d{4})\-(\d{2})\-(\d{2})/, function(match, p1, p2, p3) {
+          return `${p2}/${p3}/${p1}`;
+        }); 
+      }
+    }
   },
   methods: {
     ...mapActions([
@@ -200,14 +209,13 @@ export default {
       'addTask',
     ]),
     addNewTask() {
-      console.log(this.task)
       if (this.isValidForm()) {
         this.addTask({
           title: this.task.title,
           description: this.task.description,
           categoryId: this.task.categoryId,
           priority: this.task.priority,
-          deadlineDate: new Date(this.deadlineDate).toLocaleDateString(),
+          deadlineDate: new Date(this.task.deadlineDate).toLocaleDateString(),
           estimation: +this.task.estimation,
           taskId: this.task.taskId,
         })
@@ -223,16 +231,16 @@ export default {
           && this.task.title
           && this.task.description
           && this.task.deadlineDate)
-    }
+    },
   },
   created() {
     this.task = this.getActiveTask || {
-                title: 't',
+                title: '',
                 description: '',
-                deadline: '',
                 priority: '',
                 categoryId: '',
-                estimation: 0,
+                estimation: 1,
+                deadlineDate: new Date().toLocaleDateString(),
               }
   }
 }
