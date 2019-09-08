@@ -18,7 +18,12 @@
       </div>
       <div class="task-item__edit-buttons">
       
-      <button type="button" class="task-item__btn task-item__btn-up" data-title="Move to Daily list">
+      <button
+				type="button"
+				class="task-item__btn task-item__btn-up"
+				data-title="Move to Daily list"
+				@click.prevent="moveToDaily(task.taskId)"
+				>
         <span class="icon-arrows-up"></span>
       </button>
       <button
@@ -69,7 +74,7 @@ export default {
 		},
 	},
 	methods: {
-		...mapActions(['showModal'])
+		...mapActions(['showModal', 'moveToDaily'])
 	}
 }
 </script>

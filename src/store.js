@@ -43,6 +43,10 @@ export default new Vuex.Store({
       state.activeTask = null;
       state.modalShow = !state.modalShow;
     },
+    moveToDaily(state, id) {
+      const task = state.tasks.find(task => task.taskId === id);
+      task.deadlineDate = new Date().toLocaleDateString();
+    },
     filterTasks(state) {
       state.dailyTasks = [];
       state.globalTasks = [];
@@ -117,6 +121,10 @@ export default new Vuex.Store({
         .delete()
         .then(commit('deleteTask', id))
         .catch(e => console.log(e))
+    },
+    moveToDaily({ commit }, id) {
+      commit('moveToDaily', id);
+      commit('filterTasks');
     },
     showModal({commit}, id) {
       commit('showModal', id);
