@@ -26,6 +26,13 @@ export default new Vuex.Store({
     editTask(state, task) {
       state.tasks.splice(state.activeTaskIndex, 1, task);
     },
+    deleteTask(state, id) {
+      const task = state.tasks.find(task => task.taskId === id);
+      const index = state.tasks.indexOf(task);
+      index > -1 ? state.tasks.splice(index, 1) : false;
+      state.activeTask = null;
+      state.modalShow = !state.modalShow;
+    },
     showModal(state, id) {
       if(typeof id == 'string') {
         state.modalTitle = 'Edit task';
@@ -77,6 +84,15 @@ export default new Vuex.Store({
           .then(commit('editTask', task))
           .catch(e => console.log(e))
       }      
+    },
+    deleteTask({ commit }, id) {
+      firebase
+        .firestore()
+        .collection('task-list')
+        .doc(id)
+        .delete()
+        .then(commit('deleteTask', id))
+        .catch(e => console.log(e))
     },
     showModal({commit}, id) {
       commit('showModal', id);

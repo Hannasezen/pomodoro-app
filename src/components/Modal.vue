@@ -2,8 +2,9 @@
   <div class="modal">
     <div class="modal-header">
       <!--modal buttons-->
-      <button type="button"
+      <button type="button" v-if="modalTitle == 'Edit task'"
         class="modal-btn modal-delete-btn"
+        @click.prevent="deleteTask(getActiveTask.taskId)"
         >
         <span class="icon-trash"></span>
       </button>
@@ -207,6 +208,7 @@ export default {
       'showModal',
       'closeModal',
       'addTask',
+      'deleteTask'
     ]),
     addNewTask() {
       if (this.isValidForm()) {
