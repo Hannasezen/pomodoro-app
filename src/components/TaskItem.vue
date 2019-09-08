@@ -1,7 +1,7 @@
 <template>
   <li class="task-item">
     <div class="task-item__left-info">
-      <div class="task-item__color-line" :class="{['task-item__color-line--category-' + categoryId]: true}">
+      <div class="task-item__color-line" :class="{['task-item__color-line--category-' + task.categoryId]: true}">
       <button type="button" class="icon-close task-item__left-btn task-item__left-btn--checked hidden"></button>
       <button type="button" class="icon-trash task-item__left-btn task-item__left-btn--delete hidden"></button>
       </div>
@@ -13,8 +13,8 @@
     </div>
     <div class="task-item__main-info">
       <div class="task-item__text">
-      <h4 class="task-item__title" :class="{['task-item__title--priority-' + priority]: true}">{{ title }}</h4>
-      <div class="task-item__description">{{ description }}</div>
+      <h4 class="task-item__title" :class="{['task-item__title--priority-' + task.priority]: true}">{{ task.title }}</h4>
+      <div class="task-item__description">{{ task.description }}</div>
       </div>
       <div class="task-item__edit-buttons">
       
@@ -25,16 +25,16 @@
 				type="button"
 				class="task-item__btn task-item__btn-edit"
 				data-title="Edit task"
-				@click.prevent="showModal(taskId)"
+				@click.prevent="showModal(task.taskId)"
 			>
         <span class="icon-edit"></span>
       </button>
       </div>          
     </div>
-    <div class="task-item__right-info" :class="{['task-item__right-info--priority-' + priority]: true}">
+    <div class="task-item__right-info" :class="{['task-item__right-info--priority-' + task.priority]: true}">
       <button type="button" class="icon-tomato task-item__tomato">
       <span class="task-item__iteration">
-        <span class="task-item__iteration">{{ estimation }}</span>
+        <span class="task-item__iteration">{{ task.estimation }}</span>
       </span>
       </button>
     </div>
@@ -47,13 +47,10 @@ import { mapActions } from 'vuex';
 export default {
 	name: "task-item",
 	props: {
-    title: String,
-    description: String,
-    categoryId: String,
-		estimation: Number,
-		priority: String,
-		deadlineDate: String,
-		taskId: String,
+		task: {
+			type: Object,
+			required: true,
+		}    
 	},
 	data() {
 		return {
@@ -62,13 +59,13 @@ export default {
 	},
 	computed: {
 		isToday() {
-			return this.deadlineDate === this.todayDate;
+			return this.task.deadlineDate === this.todayDate;
 		},
 		taskDate() {
-			return new Date(this.deadlineDate).getDate();
+			return new Date(this.task.deadlineDate).getDate();
 		},
 		taskMonth() {
-			return new Date(this.deadlineDate).toLocaleDateString('en-US', {month: 'long'});
+			return new Date(this.task.deadlineDate).toLocaleDateString('en-US', {month: 'long'});
 		},
 	},
 	methods: {

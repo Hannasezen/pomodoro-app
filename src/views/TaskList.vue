@@ -60,8 +60,8 @@
         <!--------- no-tasks messages END ------->
 
         <!----------Daily task list-------------->
-        <ul class="task-list task-list--daily" id="daily-task-list-wrapper">       
-         <!-- <TaskItem /> -->
+        <ul v-for="task in getDailyTasks" :key="task.taskId" class="task-list task-list--daily" id="daily-task-list-wrapper">       
+         <TaskItem :task="task" />
         </ul>
         <!------Daily task list END---------->
 
@@ -126,16 +126,8 @@
         </header>
         <!--global task list header END-->
         <!--global tasks list-->
-        <ul v-for="task in getTasks" :key="task.taskId" class="task-list task-list--global" id="global-task-list-wrapper">
-          <TaskItem 
-            :title="task.title"
-            :categoryId="task.categoryId"
-            :description="task.description"
-            :estimation="task.estimation"
-            :priority="task.priority"
-            :deadlineDate="task.deadlineDate"
-            :taskId="task.taskId"
-          />
+        <ul v-for="task in getGlobalTasks" :key="task.taskId" class="task-list task-list--global" id="global-task-list-wrapper">
+          <TaskItem :task="task" />
         </ul>
         <!--global tasks list END-->
       </section>
@@ -164,12 +156,14 @@ export default {
   computed: {
     ...mapGetters([
       'getTasks',
-      'modalShow'
-      ]),    
+      'getDailyTasks',
+      'getGlobalTasks',
+      'modalShow',
+      ]), 
   },
   methods: {
     ...mapActions([
-      'showModal'
+      'showModal',
     ]),
   }
 }

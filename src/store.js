@@ -8,9 +8,19 @@ function generateId() {
   return 'task' + parseInt(Math.random() * 100000);
 }
 
+function isToday(date) {
+  const today = new Date();
+  const checkDate = new Date(date);
+  return (today.getDate() === checkDate.getDate()
+      && today.getMonth() === checkDate.getMonth() 
+    && today.getFullYear() === checkDate.getFullYear());
+}
+
 export default new Vuex.Store({
   state: {
     tasks: [],
+    globalTasks: [],
+    dailyTasks: [],
     modalShow: false,
     modalTitle: 'Add task',
     activeTask: null,
@@ -32,6 +42,17 @@ export default new Vuex.Store({
       index > -1 ? state.tasks.splice(index, 1) : false;
       state.activeTask = null;
       state.modalShow = !state.modalShow;
+    },
+    filterTasks(state) {
+      state.dailyTasks = [];
+      state.globalTasks = [];
+      state.tasks.forEach(task => {
+        if (isToday(task.deadlineDate)) {
+          state.dailyTasks.push(task);
+        } else {
+          state.globalTasks.push(task);
+        };
+      });
     },
     showModal(state, id) {
       if(typeof id == 'string') {
@@ -62,6 +83,7 @@ export default new Vuex.Store({
                   tasks.push(obj);
                 });
                 commit('updateTasks', tasks);
+                commit('filterTasks');
               })
               .catch(e => console.log(e.message));
     },
@@ -74,6 +96,7 @@ export default new Vuex.Store({
           .doc(task.taskId)
           .set(task)
           .then(commit('addTask', task))
+          .then(commit('filterTasks'))
           .catch(e => console.log(e))
       } else {
         firebase
@@ -82,6 +105,7 @@ export default new Vuex.Store({
           .doc(task.taskId)
           .update(task)
           .then(commit('editTask', task))
+          .then(commit('filterTasks'))
           .catch(e => console.log(e))
       }      
     },
@@ -104,6 +128,12 @@ export default new Vuex.Store({
   getters: {
     getTasks(state) {
       return state.tasks;
+    },
+    getDailyTasks(state) {
+      return state.dailyTasks;
+    },
+    getGlobalTasks(state) {
+      return state.globalTasks;
     },
     modalShow(state) {
       return state.modalShow;
