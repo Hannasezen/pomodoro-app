@@ -123,8 +123,16 @@ export default new Vuex.Store({
         .catch(e => console.log(e))
     },
     moveToDaily({ commit }, id) {
-      commit('moveToDaily', id);
-      commit('filterTasks');
+      firebase
+        .firestore()
+        .collection('task-list')
+        .doc(id)
+        .update({
+          deadlineDate: new Date().toLocaleDateString()
+        })
+        .then(commit('moveToDaily', id))
+        .then(commit('filterTasks'))
+        .catch(e => console.log(e))
     },
     showModal({commit}, id) {
       commit('showModal', id);
