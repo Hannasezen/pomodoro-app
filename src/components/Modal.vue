@@ -165,7 +165,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getActiveTask', 'modalTitle']),
+    ...mapGetters({
+      getActiveTask: 'Todo/getActiveTask',
+      modalTitle: 'Todo/modalTitle',
+    }),
     checkedCategory: {
       get() {
         return [this.task.categoryId];
@@ -204,12 +207,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'showModal',
-      'closeModal',
-      'addTask',
-      'deleteTask'
-    ]),
+    ...mapActions({
+      showModal: 'Todo/showModal',
+      closeModal: 'Todo/closeModal',
+      addTask: 'Todo/addTask',
+      deleteTask: 'Todo/deleteTask',
+    }),
     addNewTask() {
       if (this.isValidForm()) {
         this.addTask({

@@ -153,18 +153,15 @@ export default {
     TaskItem,
     Modal,
   },
-  computed: {
-    ...mapGetters([
-      'getTasks',
-      'getDailyTasks',
-      'getGlobalTasks',
-      'modalShow',
-      ]), 
-  },
+  computed: mapGetters({
+      getDailyTasks: 'Todo/getDailyTasks',
+      getGlobalTasks: 'Todo/getGlobalTasks',
+      modalShow: 'Todo/modalShow',
+  }),
   methods: {
-    ...mapActions([
-      'showModal',
-    ]),
+    ...mapActions({
+      showModal: 'Todo/showModal',
+    }),
   }
 }
 </script>

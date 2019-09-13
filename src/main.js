@@ -3,7 +3,7 @@ import Vue from "vue";
 import App from "./App.vue";
 
 import router from "./router";
-import store from "./store";
+import store from "./store/index.js";
 
 import firebase from 'firebase';
 
@@ -23,6 +23,6 @@ new Vue({
       messagingSenderId: "930553893874",
       appId: "1:930553893874:web:a344dc9a406e0b44"
     });
-    this.$store.dispatch('getTasks');
+    this.$store.dispatch('Todo/getTasks');
   }
 }).$mount("#app");
