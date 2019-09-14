@@ -37,11 +37,11 @@
         <legend class="fieldset__title">Title</legend>
         <label>
           <input
-          class="fieldset__input"
-          type="text"
-          name="title"
-          placeholder="Add title here"
-          v-model="task.title"
+            class="fieldset__input"
+            type="text"
+            name="title"
+            placeholder="Add title here"
+            v-model="task.title"
           />
         </label>
       </fieldset>
@@ -51,11 +51,11 @@
         <legend class="fieldset__title">Description</legend>
         <label>
           <input
-          class="fieldset__input"
-          type="text"
-          name="description"
-          placeholder="Add description here"
-          v-model="task.description"
+            class="fieldset__input"
+            type="text"
+            name="description"
+            placeholder="Add description here"
+            v-model="task.description"
           />
         </label>
       </fieldset>
@@ -85,11 +85,11 @@
         <legend class="fieldset__title">Deadline</legend>
         <label>
           <input
-          type="date"
-          class="fieldset__input"
-          id="task-date"
-          name="deadline"
-          v-model="checkedDate"
+            type="date"
+            class="fieldset__input"
+            id="task-date"
+            name="deadline"
+            v-model="checkedDate"
           >
         </label>
       </fieldset>

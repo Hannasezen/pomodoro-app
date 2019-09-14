@@ -23,6 +23,6 @@ new Vue({
       messagingSenderId: "930553893874",
       appId: "1:930553893874:web:a344dc9a406e0b44"
     });
-    this.$store.dispatch('Todo/getTasks');
+    
   }
 }).$mount("#app");

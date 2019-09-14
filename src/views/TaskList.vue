@@ -162,6 +162,9 @@ export default {
     ...mapActions({
       showModal: 'Todo/showModal',
     }),
+  },
+  created() {
+    this.$store.dispatch('Todo/getTasks');
   }
 }
 </script>

@@ -60,6 +60,7 @@ export default {
       .doc(id)
       .delete()
       .then(commit(DELETE_TASK, id))
+      .then(commit(FILTER_TASKS))
       .catch(e => console.log(e))
   },
   moveToDaily({ commit }, id) {

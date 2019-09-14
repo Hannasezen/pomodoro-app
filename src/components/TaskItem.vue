@@ -74,7 +74,10 @@ export default {
 		},
 	},
 	methods: {
-		...mapActions(['showModal', 'moveToDaily'])
+		...mapActions({
+			showModal: 'Todo/showModal',
+			moveToDaily: 'Todo/moveToDaily'
+		})
 	}
 }
 </script>

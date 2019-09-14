@@ -30,7 +30,7 @@ export default {
   [DELETE_TASK](state, id) {
     const task = state.tasks.find(task => task.taskId === id);
     const index = state.tasks.indexOf(task);
-    index > -1 ? state.tasks.splice(index, 1) : false;
+    if (index > -1) state.tasks.splice(index, 1);
     state.activeTask = null;
     state.modalShow = !state.modalShow;
   },
