@@ -25,6 +25,7 @@
   font-size: @tabmenu-font-size-l;
   line-height: 1;
   position: relative;
+  cursor: pointer;
   .transition(color);
   &:not(.last):after {
     content: '';
@@ -43,7 +44,11 @@
   }
   .mobile({
     font-size: @tabmenu-font-size-s-p;
-  })
+  });
+  &--input {
+    .visually-hidden();
+    padding: 0 10px;
+  }
 }
 
 .page-tab-item__link--last.page-tab-item__link:after {

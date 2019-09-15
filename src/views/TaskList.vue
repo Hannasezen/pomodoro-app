@@ -15,8 +15,8 @@
             </button>
           </h1>
         </div>
-        <nav class="page-tab-menu-holder task-list__tab-menu">
-          <ul class="page-tab-menu page-tab-menu--left hidden" id="dailyDeleteMenu">
+        <nav class="page-tab-menu-holder task-list__tab-menu" v-if="getDailyTasks.length > 0">
+          <ul class="page-tab-menu page-tab-menu--left" id="dailyDeleteMenu">
             <li class="page-tab-item">
               <a href="" class="page-tab-item__link">Selected All</a>
             </li>
@@ -24,7 +24,7 @@
               <a href="" class="page-tab-item__link last">Deselected All</a>
             </li>
           </ul>
-          <ul class="page-tab-menu page-tab-menu--right hidden" id="dailyFilterMenu">
+          <ul class="page-tab-menu page-tab-menu--right" id="dailyFilterMenu">
             <li class="page-tab-item">
               <a href="" class="page-tab-item__link active">To Do</a>
             </li>
@@ -38,7 +38,7 @@
         <!--------- no-tasks messages --------->
         
         <!--add first task message-->
-        <div class="add-task hidden">
+        <div class="add-task" v-if="taskMessage === 'Add first task'">
           <div class="add-task__image pomodora-image">
             <img src="../assets/images/svg/tomato-add.svg" alt="pomodoro image add new task">
           </div>
@@ -48,7 +48,7 @@
         </div>
         <!--add first task message END-->
         <!--add new task message-->
-        <div class="no-tasks hidden">
+        <div class="no-tasks" v-if="taskMessage === 'Add new task'">
           <div class="add-task__image pomodora-image">
             <img src="../assets/images/svg/tomato-addv02.svg" alt="pomodoro image no any tasks">
           </div>
@@ -67,11 +67,11 @@
 
         <!--task-list page`s message-->
         <div class="task-list-messages">
-          <div class="task-list-message task-list-message-done hidden">
+          <div class="task-list-message task-list-message-done" v-if="taskMessage === 'All tasks done'">
             <p class="task-list-message__text">Excellent, all daily tasks done! :)</p>
             <div class="task-list-message__icon"></div>
           </div>
-          <div class="task-list-message task-list-message-added hidden">
+          <div class="task-list-message task-list-message-added" v-if="taskMessage === 'Move to daily'">
             <p class="task-list-message__text">Task added,<br>drag it to the top 5 in daily task list</p>
             <div class="task-list-message__icon icon-arrow_circle"></div>
           </div>
@@ -91,7 +91,7 @@
             </a>
           </h3>
           <!--global task list left tab-menu-->
-          <nav class="page-tab-menu-holder page-tab-menu-holder--global-left hidden" id="globalDeleteMenu">
+          <nav class="page-tab-menu-holder page-tab-menu-holder--global-left" id="globalDeleteMenu" v-if="getGlobalTasks.length > 0">
             <ul class="page-tab-menu page-tab-menu--left">
               <li class="page-tab-item">
                 <a href="" class="page-tab-item__link">Selected All</a>
@@ -103,30 +103,29 @@
           </nav>
           <!--global task list left tab-menu END-->
           <!--global task list right tab-menu-->
-          <nav class="page-tab-menu-holder hidden" id="globalFilterMenu">
+          <form class="page-tab-menu-holder" id="globalFilterMenu">
             <ul class="page-tab-menu page-tab-menu--right">
-              <li class="page-tab-item">
-                <a href="" class="page-tab-item__link active" data-value="all">All</a>
-              </li>
-              <li class="page-tab-item">
-                <a href="" class="page-tab-item__link" data-value="urgent">Urgent</a>
-              </li>
-              <li class="page-tab-item">
-                <a href="" class="page-tab-item__link" data-value="high">High</a>
-              </li>
-              <li class="page-tab-item">
-                <a href="" class="page-tab-item__link" data-value="middle">Middle</a>
-              </li>
-              <li class="page-tab-item">
-                <a href="" class="page-tab-item__link last" data-value="low">Low</a>
-              </li>
+              <label
+                v-for="filter in filters"
+                :key="filter"
+                class="page-tab-item page-tab-item__link"
+                :class="{ active: checkedFilter == filter.toLowerCase() }"
+                >{{ filter }}
+                <input
+                  type="radio"
+                  name="filterPriority"
+                  class="page-tab-item__link--input"
+                  :value="filter.toLowerCase()"
+                  v-model="checkedFilter"
+                >
+              </label>
             </ul>
-          </nav>
+          </form>
           <!--global task list right tab-menu END-->
         </header>
         <!--global task list header END-->
         <!--global tasks list-->
-        <ul v-for="task in getGlobalTasks" :key="task.taskId" class="task-list task-list--global" id="global-task-list-wrapper">
+        <ul v-for="task in filteredList" :key="task.taskId" class="task-list task-list--global" id="global-task-list-wrapper">
           <TaskItem :task="task" />
         </ul>
         <!--global tasks list END-->
@@ -146,18 +145,35 @@ export default {
   name: "task-list",
   data() {
     return {
-
+      checkedFilter: 'all',
+      filters: [
+        'All',
+        'Urgent',
+        'High',
+        'Middle',
+        'Low',
+      ]
     }
   },
 	components: {
     TaskItem,
     Modal,
   },
-  computed: mapGetters({
+  computed: {
+    ...mapGetters({
       getDailyTasks: 'Todo/getDailyTasks',
       getGlobalTasks: 'Todo/getGlobalTasks',
       modalShow: 'Todo/modalShow',
-  }),
+      taskMessage: 'Todo/taskMessage',
+    }),
+    filteredList() {
+      if (this.checkedFilter == 'all') {
+        return this.getGlobalTasks;
+      } else {
+        return this.getGlobalTasks.filter(task => this.checkedFilter === task.priority);
+      }
+    },
+  },
   methods: {
     ...mapActions({
       showModal: 'Todo/showModal',
@@ -208,7 +224,7 @@ export default {
 		margin: 0;
 		cursor: pointer;
 		&__link {
-			.transition(color);
+      .transition(color);
 			&:hover {
 				color: @link-color-hover;
 			}

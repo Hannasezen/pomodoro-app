@@ -4,7 +4,7 @@ export default {
     return state.dailyTasks;
   },
   getGlobalTasks(state) {
-    return state.globalTasks;
+    return state.globalTasks.sort((a, b) => new Date(a.deadlineDate).getTime() - new Date(b.deadlineDate).getTime());
   },
   modalShow(state) {
     return state.modalShow;
