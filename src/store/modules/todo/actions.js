@@ -5,13 +5,20 @@ import {
   DELETE_TASK,
   EDIT_TASK,
   MOVE_TASK_TO_DAILY,
-  FILTER_TASKS,
   SHOW_MODAL,
-  CLOSE_MODAL
+  CLOSE_MODAL,
 } from './mutation-types';
 
 function generateId() {
   return 'task' + parseInt(Math.random() * 100000);
+};
+
+function isToday(date) {
+  const today = new Date();
+  const checkDate = new Date(date);
+  return (today.getDate() === checkDate.getDate()
+    && today.getMonth() === checkDate.getMonth()
+    && today.getFullYear() === checkDate.getFullYear());
 };
 
 export default {
@@ -24,10 +31,10 @@ export default {
       .then((querySnapshot) => {
         querySnapshot.docs.forEach((doc, index) => {
           let obj = doc.data();
+          obj.status = isToday(obj.deadlineDate) ? 'DAILY' : 'GLOBAL';
           tasks.push(obj);
         });
         commit(UPDATE_TASKS, tasks);
-        commit(FILTER_TASKS);
       })
       .catch(e => console.log(e.message));
   },
@@ -39,8 +46,10 @@ export default {
         .collection('task-list')
         .doc(task.taskId)
         .set(task)
-        .then(commit(ADD_TASK, task))
-        .then(commit(FILTER_TASKS))
+        .then(() => {
+          task.status = isToday(task.deadlineDate) ? 'DAILY' : 'GLOBAL';
+          commit(ADD_TASK, task);
+        })
         .catch(e => console.log(e))
     } else {
       firebase
@@ -48,8 +57,10 @@ export default {
         .collection('task-list')
         .doc(task.taskId)
         .update(task)
-        .then(commit(EDIT_TASK, task))
-        .then(commit(FILTER_TASKS))
+        .then(() => {
+          task.status = isToday(task.deadlineDate) ? 'DAILY' : 'GLOBAL';
+          commit(EDIT_TASK, task);
+        })
         .catch(e => console.log(e))
     }
   },
@@ -60,7 +71,6 @@ export default {
       .doc(id)
       .delete()
       .then(commit(DELETE_TASK, id))
-      .then(commit(FILTER_TASKS))
       .catch(e => console.log(e))
   },
   moveToDaily({ commit }, id) {
@@ -72,7 +82,6 @@ export default {
         deadlineDate: new Date().toLocaleDateString()
       })
       .then(commit(MOVE_TASK_TO_DAILY, id))
-      .then(commit(FILTER_TASKS))
       .catch(e => console.log(e))
   },
   showModal({ commit }, id) {

@@ -4,18 +4,10 @@ import {
   DELETE_TASK,
   EDIT_TASK,
   MOVE_TASK_TO_DAILY,
-  FILTER_TASKS,
   SHOW_MODAL,
-  CLOSE_MODAL
+  CLOSE_MODAL,
+  UPDATE_TASK_MESSAGE,
 } from './mutation-types';
-
-function isToday(date) {
-  const today = new Date();
-  const checkDate = new Date(date);
-  return (today.getDate() === checkDate.getDate()
-    && today.getMonth() === checkDate.getMonth()
-    && today.getFullYear() === checkDate.getFullYear());
-};
 
 export default {
   [UPDATE_TASKS](state, tasks) {
@@ -37,17 +29,10 @@ export default {
   [MOVE_TASK_TO_DAILY](state, id) {
     const task = state.tasks.find(task => task.taskId === id);
     task.deadlineDate = new Date().toLocaleDateString();
+    task.status = 'DAILY';
   },
-  [FILTER_TASKS](state) {
-    state.dailyTasks = [];
-    state.globalTasks = [];
-    state.tasks.forEach(task => {
-      if (isToday(task.deadlineDate)) {
-        state.dailyTasks.push(task);
-      } else {
-        state.globalTasks.push(task);
-      };
-    });
+  [UPDATE_TASK_MESSAGE](state) {
+    
   },
   [SHOW_MODAL](state, id) {
     if (typeof id == 'string') {
