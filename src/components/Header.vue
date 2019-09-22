@@ -8,13 +8,13 @@
         </div>
         <nav class="page-navigation">
           <ul class="nav-list">
-            <li class="nav-item hidden">
-              <a class="nav-item__link" href="" data-title="Add New Task">
+            <li class="nav-item">
+              <a class="nav-item__link" href="#" data-title="Add New Task">
                 <span class="icon-add nav-item__icon"></span>
               </a>
             </li>
-            <li class="nav-item hidden header-delete-button">
-              <a class="nav-item__link nav-item__link-delete" href="" data-title="Delete Tasks" data-delete-mode="false">
+            <li class="nav-item header-delete-button">
+              <a class="nav-item__link nav-item__link-delete" href="#" data-title="Delete Tasks" data-delete-mode="false">
                 <span class="icon-trash nav-item__icon"></span>
               </a>
               <span class="delete-task-count">0</span>

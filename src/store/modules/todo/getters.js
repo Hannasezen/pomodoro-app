@@ -6,4 +6,5 @@ export default {
   getActiveTask: state => state.activeTask,
   modalTitle: state => state.modalTitle,
   taskMessage: state => state.taskMessage,
+  categories: state => state.categories,
 };

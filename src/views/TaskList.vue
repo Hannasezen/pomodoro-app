@@ -18,18 +18,18 @@
         <nav class="page-tab-menu-holder task-list__tab-menu" v-if="getDailyTasks.length > 0">
           <ul class="page-tab-menu page-tab-menu--left" id="dailyDeleteMenu">
             <li class="page-tab-item">
-              <a href="" class="page-tab-item__link">Selected All</a>
+              <a href="#" class="page-tab-item__link">Selected All</a>
             </li>
             <li class="page-tab-item">
-              <a href="" class="page-tab-item__link last">Deselected All</a>
+              <a href="#" class="page-tab-item__link last">Deselected All</a>
             </li>
           </ul>
           <ul class="page-tab-menu page-tab-menu--right" id="dailyFilterMenu">
             <li class="page-tab-item">
-              <a href="" class="page-tab-item__link active">To Do</a>
+              <a href="#" class="page-tab-item__link active">To Do</a>
             </li>
             <li class="page-tab-item">
-              <a href="" class="page-tab-item__link last">Done</a>
+              <a href="#" class="page-tab-item__link last">Done</a>
             </li>
           </ul>
         </nav>  
@@ -60,8 +60,8 @@
         <!--------- no-tasks messages END ------->
 
         <!----------Daily task list-------------->
-        <ul v-for="task in getDailyTasks" :key="task.taskId" class="task-list task-list--daily" id="daily-task-list-wrapper">       
-         <TaskItem :task="task" />
+        <ul class="task-list task-list--daily" id="daily-task-list-wrapper">       
+         <TaskItem v-for="task in getDailyTasks" :key="task.taskId"  :task="task" />
         </ul>
         <!------Daily task list END---------->
 
@@ -85,7 +85,7 @@
         <!--global task list header-->
         <header class="global-list-header">
           <h3 class="global-list-title">
-            <a class="global-list-title__link" href="" data-title="Go to Global List">
+            <a class="global-list-title__link" href="#" data-title="Go to Global List">
               <span class="global-list-title__text">Global list</span>
               <span class="icon-global-list-arrow-down global-list-title__icon"></span>
             </a>
@@ -94,10 +94,10 @@
           <nav class="page-tab-menu-holder page-tab-menu-holder--global-left" id="globalDeleteMenu" v-if="getGlobalTasks.length > 0">
             <ul class="page-tab-menu page-tab-menu--left">
               <li class="page-tab-item">
-                <a href="" class="page-tab-item__link">Selected All</a>
+                <a href="#" class="page-tab-item__link">Selected All</a>
               </li>
               <li class="page-tab-item">
-                <a href="" class="page-tab-item__link last">Deselected All</a>
+                <a href="#" class="page-tab-item__link last">Deselected All</a>
               </li>
             </ul>
           </nav>
@@ -125,8 +125,21 @@
         </header>
         <!--global task list header END-->
         <!--global tasks list-->
-        <ul v-for="task in filteredList" :key="task.taskId" class="task-list task-list--global" id="global-task-list-wrapper">
-          <TaskItem :task="task" />
+        <ul class="task-list task-list--global" id="global-task-list-wrapper">
+          <ul
+            v-for="(category, index) in categories"
+            :key="index"
+            class="task-list-category-group task-sublist"
+            :class="{['task-sublist--' + category]: true}"
+            v-show="filteredList.filter(task => task.categoryId === category).length"
+          >
+          <h3 class="task-list-category">{{ category }}</h3>
+            <TaskItem
+              v-for="task in filteredList.filter(task => task.categoryId === category)"
+              :key="task.taskId"
+              :task="task"
+            />
+          </ul>
         </ul>
         <!--global tasks list END-->
       </section>
@@ -165,6 +178,7 @@ export default {
       getGlobalTasks: 'Todo/getGlobalTasks',
       modalShow: 'Todo/modalShow',
       taskMessage: 'Todo/taskMessage',
+      categories: 'Todo/categories',
     }),
     filteredList() {
       if (this.checkedFilter == 'all') {
@@ -285,7 +299,9 @@ export default {
 }
 
 .task-sublist {
-	position: relative;
+  position: relative;
+  padding-left: 0;
+  
 	@categories: work, education, hobby, sport, other;
 	each(@categories, {
 		&--@{value} {
