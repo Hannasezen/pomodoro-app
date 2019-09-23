@@ -38,7 +38,7 @@
         <!--------- no-tasks messages --------->
         
         <!--add first task message-->
-        <div class="add-task" v-if="taskMessage === 'Add first task'">
+        <div class="add-task hidden">
           <div class="add-task__image pomodora-image">
             <img src="../assets/images/svg/tomato-add.svg" alt="pomodoro image add new task">
           </div>
@@ -47,8 +47,9 @@
           </div>
         </div>
         <!--add first task message END-->
+
         <!--add new task message-->
-        <div class="no-tasks" v-if="taskMessage === 'Add new task'">
+        <div class="no-tasks hidden">
           <div class="add-task__image pomodora-image">
             <img src="../assets/images/svg/tomato-addv02.svg" alt="pomodoro image no any tasks">
           </div>
@@ -57,7 +58,21 @@
           </div>
         </div>
         <!--add new task message END-->
+
         <!--------- no-tasks messages END ------->
+
+        <!--task-list page`s message-->
+        <div class="task-list-messages">
+          <div class="task-list-message task-list-message-done hidden">
+            <p class="task-list-message__text">Excellent, all daily tasks done! :)</p>
+            <div class="task-list-message__icon"></div>
+          </div>
+          <div class="task-list-message task-list-message-added hidden">
+            <p class="task-list-message__text">Task added,<br>drag it to the top 5 in daily task list</p>
+            <div class="task-list-message__icon icon-arrow_circle"></div>
+          </div>
+        </div>
+        <!--task-list page`s message END--> 
 
         <!----------Daily task list-------------->
         <ul class="task-list task-list--daily" id="daily-task-list-wrapper">       
@@ -65,18 +80,6 @@
         </ul>
         <!------Daily task list END---------->
 
-        <!--task-list page`s message-->
-        <div class="task-list-messages">
-          <div class="task-list-message task-list-message-done" v-if="taskMessage === 'All tasks done'">
-            <p class="task-list-message__text">Excellent, all daily tasks done! :)</p>
-            <div class="task-list-message__icon"></div>
-          </div>
-          <div class="task-list-message task-list-message-added" v-if="taskMessage === 'Move to daily'">
-            <p class="task-list-message__text">Task added,<br>drag it to the top 5 in daily task list</p>
-            <div class="task-list-message__icon icon-arrow_circle"></div>
-          </div>
-        </div>
-        <!--task-list page`s message END-->      
       </section>
       <!--DAILY TASK LIST SECTION END-->
 
@@ -85,13 +88,22 @@
         <!--global task list header-->
         <header class="global-list-header">
           <h3 class="global-list-title">
-            <a class="global-list-title__link" href="#" data-title="Go to Global List">
+            <a class="global-list-title__link"
+              href="#"
+              data-title="Go to Global List"
+              @click.prevent="toggleGlobalList"
+            >
               <span class="global-list-title__text">Global list</span>
               <span class="icon-global-list-arrow-down global-list-title__icon"></span>
             </a>
           </h3>
           <!--global task list left tab-menu-->
-          <nav class="page-tab-menu-holder page-tab-menu-holder--global-left" id="globalDeleteMenu" v-if="getGlobalTasks.length > 0">
+          <nav
+            class="page-tab-menu-holder page-tab-menu-holder--global-left"
+            id="globalDeleteMenu"
+            v-if="getGlobalTasks.length > 0"
+            v-show="!hideGlobalList"
+          >
             <ul class="page-tab-menu page-tab-menu--left">
               <li class="page-tab-item">
                 <a href="#" class="page-tab-item__link">Selected All</a>
@@ -103,7 +115,12 @@
           </nav>
           <!--global task list left tab-menu END-->
           <!--global task list right tab-menu-->
-          <form class="page-tab-menu-holder" id="globalFilterMenu">
+          <form
+            class="page-tab-menu-holder"
+            id="globalFilterMenu"
+            v-if="getGlobalTasks.length > 0"
+            v-show="!hideGlobalList"
+          >
             <ul class="page-tab-menu page-tab-menu--right">
               <label
                 v-for="filter in filters"
@@ -125,7 +142,11 @@
         </header>
         <!--global task list header END-->
         <!--global tasks list-->
-        <ul class="task-list task-list--global" id="global-task-list-wrapper">
+        <ul
+          class="task-list task-list--global"
+          id="global-task-list-wrapper"
+          v-show="!hideGlobalList"
+        >
           <ul
             v-for="(category, index) in categories"
             :key="index"
@@ -145,7 +166,9 @@
       </section>
       <!--GLOBAL tasks list page END-->
     </div>
-    <Modal v-if="modalShow"/>
+    <div class="modal-holder" v-if="modalShow">
+      <Modal />
+    </div>    
   </section>
 </template>
 
@@ -159,6 +182,7 @@ export default {
   data() {
     return {
       checkedFilter: 'all',
+      hideGlobalList: false,
       filters: [
         'All',
         'Urgent',
@@ -192,6 +216,9 @@ export default {
     ...mapActions({
       showModal: 'Todo/showModal',
     }),
+    toggleGlobalList() {
+      this.hideGlobalList = !this.hideGlobalList;
+    }
   },
   created() {
     this.$store.dispatch('Todo/getTasks');

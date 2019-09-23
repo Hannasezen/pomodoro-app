@@ -9,7 +9,7 @@
         <nav class="page-navigation">
           <ul class="nav-list">
             <li class="nav-item">
-              <a class="nav-item__link" href="#" data-title="Add New Task">
+              <a class="nav-item__link" href="#" data-title="Add New Task" @click.prevent="showModal">
                 <span class="icon-add nav-item__icon"></span>
               </a>
             </li>
@@ -41,8 +41,14 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
-  
+  methods: {
+    ...mapActions({
+      showModal: 'Todo/showModal',
+    }),
+  },
 }
 </script>
 
