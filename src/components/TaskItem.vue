@@ -23,6 +23,7 @@
 				class="task-item__btn task-item__btn-up"
 				data-title="Move to Daily list"
 				@click.prevent="moveToDaily(task.taskId)"
+				v-if="task.status == 'GLOBAL'"
 				>
         <span class="icon-arrows-up"></span>
       </button>
