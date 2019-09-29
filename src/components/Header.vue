@@ -9,15 +9,25 @@
         <nav class="page-navigation">
           <ul class="nav-list">
             <li class="nav-item">
-              <a class="nav-item__link" href="#" data-title="Add New Task" @click.prevent="showModal">
+              <a
+                class="nav-item__link"
+                href="#" data-title="Add New Task"
+                @click.prevent="showModal"
+              >
                 <span class="icon-add nav-item__icon"></span>
               </a>
             </li>
             <li class="nav-item header-delete-button">
-              <a class="nav-item__link nav-item__link-delete" href="#" data-title="Delete Tasks" data-delete-mode="false">
+              <a
+                class="nav-item__link nav-item__link-delete"
+                href="#"
+                data-title="Delete Tasks"
+                data-delete-mode="false"
+                @click.prevent="deleteTasks"
+              >
                 <span class="icon-trash nav-item__icon"></span>
               </a>
-              <span class="delete-task-count">0</span>
+              <span class="delete-task-count" v-show="deletedTasks.length">{{ deletedTasks.length }}</span>
             </li>
             <li class="nav-item">
               <router-link to="/" class="nav-item__link nav-item__link-task-list" data-title="Go to Task List">
@@ -41,13 +51,24 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
+  computed: {
+    ...mapGetters({
+      deletedTasks: 'Todo/getDeleteTasks',
+      deleteMode: 'Todo/deleteMode',
+    })
+  },
   methods: {
     ...mapActions({
       showModal: 'Todo/showModal',
+      switchDeleteMode: 'Todo/switchDeleteMode',
+      deleteSelectedTasks: 'Todo/deleteSelectedTasks',
     }),
+    deleteTasks() {
+      !this.deleteMode ? this.switchDeleteMode() : this.deletedTasks.length ? this.deleteSelectedTasks(this.deletedTasks.map(task => task.taskId)) : this.switchDeleteMode();      
+    },
   },
 }
 </script>
@@ -134,7 +155,6 @@ export default {
 .header-delete-button {
 	position: relative;
 	& .delete-task-count {
-		display: none;
 		position: absolute;
 		top: 50%;
 		left: 50%;

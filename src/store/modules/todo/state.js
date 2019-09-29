@@ -7,4 +7,5 @@ export default {
     activeTaskIndex: 0,
     taskMessage: '',
     dailyListSize: 5,
+    deleteMode: false,
   }

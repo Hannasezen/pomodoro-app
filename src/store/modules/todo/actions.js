@@ -7,6 +7,9 @@ import {
   MOVE_TASK_TO_DAILY,
   SHOW_MODAL,
   CLOSE_MODAL,
+  SWITCH_DELETE_MODE,
+  MARK_TASK,
+  DELETE_SELECTED_TASKS,
 } from './mutation-types';
 
 function generateId() {
@@ -32,6 +35,8 @@ export default {
         querySnapshot.docs.forEach((doc, index) => {
           let obj = doc.data();
           obj.status = isToday(obj.deadlineDate) ? 'DAILY' : 'GLOBAL';
+          obj.checked = false;
+          obj.deleted = false;
           tasks.push(obj);
         });
         commit(UPDATE_TASKS, tasks);
@@ -41,6 +46,8 @@ export default {
   addTask({ commit }, task) {
     if (!task.taskId) {
       task.taskId = generateId();
+      task.checked = false;
+      task.deleted = false;
       firebase
         .firestore()
         .collection('task-list')
@@ -89,5 +96,23 @@ export default {
   },
   closeModal({ commit }) {
     commit(CLOSE_MODAL);
-  }
+  },
+  switchDeleteMode({ commit }) {
+    commit(SWITCH_DELETE_MODE);
+  },
+  markTask({ commit }, id) {
+    commit(MARK_TASK, id);
+  },
+  deleteSelectedTasks({ commit }, taskIds) {
+    // commit(DELETE_SELECTED_TASKS, taskIds);
+    taskIds.forEach(id => {
+      return firebase
+        .firestore()
+        .collection('task-list')
+        .doc(id)
+        .delete()
+        .then(commit(DELETE_TASK, id))
+        .catch(e => console.log(e))
+    })
+  },
 };

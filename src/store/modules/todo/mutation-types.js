@@ -5,3 +5,6 @@ export const MOVE_TASK_TO_DAILY = 'MOVE_TASK_TO_DAILY';
 export const UPDATE_TASKS = 'UPDATE_TASKS';
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
+export const SWITCH_DELETE_MODE = 'SWITCH_DELETE_MODE';
+export const MARK_TASK = 'MARK_TASK';
+export const DELETE_SELECTED_TASKS = 'DELETE_SELECTED_TASKS';

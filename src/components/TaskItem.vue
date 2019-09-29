@@ -1,9 +1,18 @@
 <template>
-  <li class="task-item">
+  <li
+		class="task-item"
+		:class="{ checked: task.checked, delete: task.deleted }"
+	>
     <div class="task-item__left-info">
-      <div class="task-item__color-line" :class="{['task-item__color-line--category-' + task.categoryId]: true}">
-      <button type="button" class="icon-close task-item__left-btn task-item__left-btn--checked hidden"></button>
-      <button type="button" class="icon-trash task-item__left-btn task-item__left-btn--delete hidden"></button>
+      <div class="task-item__color-line" :class="{['task-item__color-line--category-' + task.categoryId]: true}" @click="markTask(task.taskId)">
+				<button
+					type="button"
+					class="icon-close task-item__left-btn task-item__left-btn--delete hidden"
+				></button>
+				<button
+					type="button"
+					class="icon-trash task-item__left-btn task-item__left-btn--checked hidden"
+				></button>
       </div>
       <div class="task-item__date" v-if="isToday">TODAY</div>
       <div class="task-item__date task-item__date--full" v-else>
@@ -77,7 +86,8 @@ export default {
 	methods: {
 		...mapActions({
 			showModal: 'Todo/showModal',
-			moveToDaily: 'Todo/moveToDaily'
+			moveToDaily: 'Todo/moveToDaily',
+			markTask: 'Todo/markTask',
 		})
 	}
 }
