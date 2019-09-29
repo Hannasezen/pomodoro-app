@@ -8,7 +8,7 @@ import {
   CLOSE_MODAL,
   SWITCH_DELETE_MODE,
   MARK_TASK,
-  DELETE_SELECTED_TASKS,
+  CLOSE_DELETE_MODE,
 } from './mutation-types';
 
 export default {
@@ -49,15 +49,27 @@ export default {
     state.modalShow = !state.modalShow;
   },
   [SWITCH_DELETE_MODE](state) {
-    state.tasks.forEach(task => task.checked = !task.checked);
+    state.tasks.forEach(task => {
+      task.checked = !task.checked;
+      if (task.deleted) {
+        task.deleted = false;
+        task.checked = false;
+      }
+      return;
+    });
     state.deleteMode = !state.deleteMode;
+  },
+  [CLOSE_DELETE_MODE](state) {
+    state.tasks.forEach(task => {
+      task.checked = false;
+      task.deleted = false;
+      return;
+    });
+    state.deleteMode = false;
   },
   [MARK_TASK](state, id) {
     const index = state.tasks.findIndex(task => task.taskId == id);
     state.tasks[index].deleted = !state.tasks[index].deleted;
     state.tasks[index].checked = !state.tasks[index].checked;
-  },
-  [DELETE_SELECTED_TASKS](state, taskIds) {
-    taskIds.forEach(id => state.tasks.splice(state.tasks.findIndex(task => task.taskId === id), 1));
   },
 };

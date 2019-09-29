@@ -31,7 +31,7 @@
 				type="button"
 				class="task-item__btn task-item__btn-up"
 				data-title="Move to Daily list"
-				@click.prevent="moveToDaily(task.taskId)"
+				@click.prevent="moveToDaily(task.taskId); closeDeleteMode()"
 				v-if="task.status == 'GLOBAL'"
 				>
         <span class="icon-arrows-up"></span>
@@ -40,7 +40,7 @@
 				type="button"
 				class="task-item__btn task-item__btn-edit"
 				data-title="Edit task"
-				@click.prevent="showModal(task.taskId)"
+				@click.prevent="showModal(task.taskId); closeDeleteMode()"
 			>
         <span class="icon-edit"></span>
       </button>
@@ -88,6 +88,7 @@ export default {
 			showModal: 'Todo/showModal',
 			moveToDaily: 'Todo/moveToDaily',
 			markTask: 'Todo/markTask',
+			closeDeleteMode: 'Todo/closeDeleteMode',
 		})
 	}
 }

@@ -9,7 +9,7 @@
             <span class="page-title__text">Daily Task List</span>
             <button class="page-title__button add-task-button"
                     data-title="Add New Task"
-                    @click="showModal"
+                    @click.prevent="closeDeleteMode(); showModal()"
             >
             <span class="icon-add"></span>
             </button>
@@ -215,6 +215,7 @@ export default {
   methods: {
     ...mapActions({
       showModal: 'Todo/showModal',
+      closeDeleteMode: 'Todo/closeDeleteMode',
     }),
     toggleGlobalList() {
       this.hideGlobalList = !this.hideGlobalList;

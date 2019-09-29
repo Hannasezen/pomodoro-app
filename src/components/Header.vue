@@ -12,7 +12,7 @@
               <a
                 class="nav-item__link"
                 href="#" data-title="Add New Task"
-                @click.prevent="showModal"
+                @click.prevent="showModal(); closeDeleteMode()"
               >
                 <span class="icon-add nav-item__icon"></span>
               </a>
@@ -35,12 +35,12 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/reports" class="nav-item__link" data-title="Go to Reports">
+              <router-link to="/reports" class="nav-item__link" data-title="Go to Reports" @click="closeDeleteMode">
                 <span class="icon-statistics nav-item__icon"></span>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/settings" class="nav-item__link" data-title="Go to Settings">
+              <router-link to="/settings" class="nav-item__link" data-title="Go to Settings" @click="closeDeleteMode">
                 <span class="icon-settings nav-item__icon"></span>
               </router-link>
             </li> 
@@ -65,6 +65,7 @@ export default {
       showModal: 'Todo/showModal',
       switchDeleteMode: 'Todo/switchDeleteMode',
       deleteSelectedTasks: 'Todo/deleteSelectedTasks',
+      closeDeleteMode: 'Todo/closeDeleteMode',
     }),
     deleteTasks() {
       !this.deleteMode ? this.switchDeleteMode() : this.deletedTasks.length ? this.deleteSelectedTasks(this.deletedTasks.map(task => task.taskId)) : this.switchDeleteMode();      
