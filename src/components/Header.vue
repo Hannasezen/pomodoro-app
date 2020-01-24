@@ -2,25 +2,28 @@
   <div class="header">
     <div class="header-container">
         <div class="page-logo">
-          <a href="#" class="page-logo__link">
+          <a href="#" class="page-logo__link"> {{ activeRoute }}
             <img class="page-logo__image" src="../assets/logo.svg" alt="page`s logo">
           </a>
         </div>
-        <nav class="page-navigation">
+        <nav class="page-navigation" @click.prevent="setActiveTab1">
           <ul class="nav-list">
-            <li class="nav-item">
+            <li class="nav-item" v-show="activeRoute === 'task-list'">
               <a
                 class="nav-item__link"
-                href="#" data-title="Add New Task"
+                id="add-task"
+                href="#"
+                data-title="Add New Task"
                 @click.prevent="showModal(); closeDeleteMode()"
               >
                 <span class="icon-add nav-item__icon"></span>
               </a>
             </li>
-            <li class="nav-item header-delete-button">
+            <li class="nav-item header-delete-button" v-show="activeRoute === 'task-list'">
               <a
                 class="nav-item__link nav-item__link-delete"
                 href="#"
+                id="delete-task"
                 data-title="Delete Tasks"
                 data-delete-mode="false"
                 @click.prevent="deleteTasks"
@@ -30,17 +33,17 @@
               <span class="delete-task-count" v-show="deletedTasks.length">{{ deletedTasks.length }}</span>
             </li>
             <li class="nav-item">
-              <router-link to="/" class="nav-item__link nav-item__link-task-list" data-title="Go to Task List">
+              <router-link to="/" id="task-list" class="nav-item__link nav-item__link-task-list" data-title="Go to Task List">
                 <span class="icon-list nav-item__icon"></span>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/reports" class="nav-item__link" data-title="Go to Reports" @click="closeDeleteMode">
+              <router-link to="/reports" id="reports" class="nav-item__link" data-title="Go to Reports" @click="closeDeleteMode">
                 <span class="icon-statistics nav-item__icon"></span>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/settings" class="nav-item__link" data-title="Go to Settings" @click="closeDeleteMode">
+              <router-link to="/settings" id="settings" class="nav-item__link" data-title="Go to Settings" @click="closeDeleteMode">
                 <span class="icon-settings nav-item__icon"></span>
               </router-link>
             </li> 
@@ -58,6 +61,7 @@ export default {
     ...mapGetters({
       deletedTasks: 'Todo/getDeleteTasks',
       deleteMode: 'Todo/deleteMode',
+      activeRoute: 'getActiveRoute',
     })
   },
   methods: {
@@ -66,9 +70,23 @@ export default {
       switchDeleteMode: 'Todo/switchDeleteMode',
       deleteSelectedTasks: 'Todo/deleteSelectedTasks',
       closeDeleteMode: 'Todo/closeDeleteMode',
+      setActiveTab: 'setActiveTab',
     }),
     deleteTasks() {
-      !this.deleteMode ? this.switchDeleteMode() : this.deletedTasks.length ? this.deleteSelectedTasks(this.deletedTasks.map(task => task.taskId)) : this.switchDeleteMode();      
+      !this.deleteMode
+        ? this.switchDeleteMode()
+        : this.deletedTasks.length
+          ? this.deleteSelectedTasks(this.deletedTasks.map(task => task.taskId))
+          : this.switchDeleteMode();      
+    },
+    setActiveTab1(e) {
+      const id = e.target.id;
+      switch(id) {
+        case 'task-list':
+        case 'settings':
+        case 'reports':
+          this.setActiveTab(id);
+      }
     },
   },
 }

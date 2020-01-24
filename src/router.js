@@ -31,11 +31,6 @@ export default new Router({
       path: "/reports",
       name: "reports",
       component: Reports
-    },
-    {
-      path: "/task-list",
-      name: "task-list",
-      component: TaskList
-    },
+    }
   ]
 });

@@ -1,1 +1,3 @@
-export default {};
+export default {
+  activeRoute: 'task-list',
+};
