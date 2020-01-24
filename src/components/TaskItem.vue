@@ -47,11 +47,11 @@
       </div>          
     </div>
     <div class="task-item__right-info" :class="{['task-item__right-info--priority-' + task.priority]: true}">
-      <button type="button" class="icon-tomato task-item__tomato">
-      <span class="task-item__iteration">
-        <span class="task-item__iteration">{{ task.estimation }}</span>
-      </span>
-      </button>
+			<router-link to="/timer" id="timer" class="task-item__tomato">
+				<span class="task-item__icon icon-tomato">
+					<span class="task-item__iteration">{{ task.estimation }}</span>
+				</span>
+			</router-link>
     </div>
   </li>
 </template>
@@ -197,6 +197,16 @@ export default {
 			left: 50%;
 			transform: translate(-50%, -50%);
 			font-size: 24 / @rem;
+		}
+		&__icon {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			&:before {
+				font-size: 48 / @rem;
+			}
 		}
 	&__btn {
 		border: none;

@@ -2,7 +2,7 @@
   <div class="header">
     <div class="header-container">
         <div class="page-logo">
-          <a href="#" class="page-logo__link"> {{ activeRoute }}
+          <a href="#" class="page-logo__link">
             <img class="page-logo__image" src="../assets/logo.svg" alt="page`s logo">
           </a>
         </div>
